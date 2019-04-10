@@ -49,13 +49,13 @@ fn main() -> Result<(), Box<std::error::Error>> {
     for result in rdr.records() {
         let record = result?;
 
-        let date = String::from(record.get(7).unwrap());
+        let date = String::from(record.get(7).ok_or("can't parse date")?);
         let description: String = format!(
             "{}: {}",
-            record.get(3).unwrap(),
-            record.get(5).unwrap()
+            record.get(3).ok_or("can't parse project")?,
+            record.get(5).ok_or("can't parse description")?
         );
-        let hours: f64 = record.get(12).unwrap().parse::<f64>()?;
+        let hours: f64 = record.get(12).ok_or("can't parse hours")?.parse::<f64>()?;
 
         records.entry((date, description))
             .and_modify(|v| *v += hours)
