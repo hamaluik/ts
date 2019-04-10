@@ -14,7 +14,7 @@ type Record = (String, String, f64);
 
 fn write_records<T: io::Write>(writer: T, records: &[Record]) -> Result<(), Box<std::error::Error>> {
     let mut wtr = csv::Writer::from_writer(writer);
-    wtr.write_record(&["date", "description", "hours"])?;
+    //wtr.write_record(&["date", "description", "hours"])?;
     for record in records {
         wtr.write_record(&[&record.0, &record.1, &format!("{}", record.2)])?;
     }
