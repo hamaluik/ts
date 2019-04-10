@@ -1,0 +1,12 @@
+[package]
+name = "ts"
+version = "0.1.0"
+authors = ["Kenton Hamaluik <kenton@rehabtronics.com>"]
+edition = "2018"
+
+[dependencies]
+csv = "1"
+clap = "2"
+encoding_rs = "0"
+encoding_rs_io = "0"
+
