@@ -4,8 +4,6 @@ extern crate clap;
 use std::fs;
 use std::path;
 use std::collections::HashMap;
-use encoding_rs::UTF_16LE;
-use encoding_rs_io::DecodeReaderBytesBuilder;
 use std::io;
 
 mod cli;
@@ -38,13 +36,10 @@ fn main() -> Result<(), Box<std::error::Error>> {
     let out_path = matches.value_of("OUTPUT");
 
     let file = fs::File::open(csv_path)?;
-    let transcoded = DecodeReaderBytesBuilder::new()
-        .encoding(Some(UTF_16LE))
-        .build(file);
 
     let mut rdr = csv::ReaderBuilder::new()
         .flexible(true)
-        .from_reader(transcoded);
+        .from_reader(file);
     let mut records: HashMap<(String, String), f64> = HashMap::new();
     for result in rdr.records() {
         let record = result?;
